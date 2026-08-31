@@ -1,0 +1,3465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For My Petruuu ❤️</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #fff4f8;
+    color: #5b3444;
+    overflow-x: hidden;
+}
+
+body.locked {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    background: #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 25px;
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+}
+
+#intro.lights-on {
+    background:
+        radial-gradient(
+            circle at center,
+            #ffffff 0%,
+            #fff2f8 28%,
+            #ffd9e8 58%,
+            #ffb6d5 100%
+        );
+}
+
+.intro-box {
+    width: 100%;
+    max-width: 430px;
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
+}
+
+.intro-heart {
+    font-size: 78px;
+
+    animation:
+        heartbeat 1.4s infinite;
+}
+
+.intro-box h1 {
+    font-size: 32px;
+    margin: 15px 0;
+}
+
+.intro-box p {
+    font-size: 17px;
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+.lights-off-content h1,
+.lights-off-content p {
+    color: white;
+}
+
+.lights-off-content .intro-heart {
+    filter:
+        drop-shadow(
+            0 0 14px #ff4f91
+        );
+}
+
+.intro-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.start-btn,
+.music-start-btn {
+
+    border: none;
+
+    color: white;
+
+    padding:
+        14px 25px;
+
+    border-radius: 50px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    min-width: 230px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(255,143,186,.4);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.start-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4f91,
+            #e83e78
+        );
+}
+
+.music-start-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e5de7,
+            #6f45c5
+        );
+}
+
+.start-btn:hover,
+.music-start-btn:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        0 10px 25px
+        rgba(255,143,186,.55);
+}
+
+.music-start-btn.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #35b879,
+            #1f9b60
+        );
+}
+
+#musicPrompt {
+    display: none;
+}
+
+#musicPrompt.show {
+    display: flex;
+}
+
+
+/* =========================================================
+   POEM SCREEN
+========================================================= */
+
+#poemScreen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9998;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fffaff 0%,
+            #ffeaf4 45%,
+            #ffd2e4 100%
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+}
+
+#poemScreen.show {
+
+    display: flex;
+
+    opacity: 1;
+}
+
+.poem-container {
+
+    width:
+        min(92vw, 700px);
+}
+
+.poem-frame {
+
+    position: relative;
+
+    padding:
+        38px 28px;
+
+    border:
+        2px solid #e889aa;
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,.8);
+
+    box-shadow:
+        0 15px 50px
+        rgba(181,67,111,.2),
+
+        inset 0 0 30px
+        rgba(255,255,255,.8);
+
+    overflow: hidden;
+}
+
+.poem-frame::before {
+
+    content: "❤";
+
+    position: absolute;
+
+    top: 10px;
+    left: 18px;
+
+    font-size: 22px;
+
+    opacity: .5;
+}
+
+.poem-frame::after {
+
+    content: "❤";
+
+    position: absolute;
+
+    bottom: 10px;
+    right: 18px;
+
+    font-size: 22px;
+
+    opacity: .5;
+}
+
+
+/* =========================================================
+   POEM LINES
+========================================================= */
+
+.poem-line {
+
+    font-size:
+        clamp(
+            19px,
+            4vw,
+            27px
+        );
+
+    line-height: 1.8;
+
+    color: #65394c;
+
+    min-height: 1.8em;
+}
+
+.poem-letter {
+
+    display: inline-block;
+
+    opacity: 0;
+
+    transform:
+        translateY(10px)
+        scale(.96);
+
+    animation:
+        letterAppear
+        .55s
+        ease
+        forwards;
+}
+
+@keyframes letterAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(.96);
+    }
+
+    60% {
+
+        opacity: 1;
+
+        transform:
+            translateY(-1px)
+            scale(1.02);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   KYUKI
+========================================================= */
+
+.poem-final {
+
+    margin-top: 18px;
+
+    font-size:
+        clamp(
+            27px,
+            5vw,
+            38px
+        );
+
+    font-weight: 700;
+
+    color: #d83e73;
+
+    opacity: 0;
+
+    transform: scale(.8);
+}
+
+.poem-final.animate {
+
+    animation:
+        finalAppear
+        1s
+        ease
+        forwards;
+}
+
+@keyframes finalAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(.8);
+    }
+
+    70% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.1);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   JOURNEY BUTTON
+========================================================= */
+
+#journeyButton {
+
+    margin-top: 25px;
+
+    padding:
+        13px 25px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4f91,
+            #d93672
+        );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    transform:
+        translateY(15px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease,
+        box-shadow .3s ease;
+}
+
+#journeyButton.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+    pointer-events: auto;
+
+    box-shadow:
+        0 8px 25px
+        rgba(216,62,115,.3);
+}
+
+#journeyButton:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+}
+
+
+/* =========================================================
+   MAIN WEBSITE
+========================================================= */
+
+#siteContent {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    filter:
+        brightness(.15);
+
+    transform:
+        scale(.985);
+
+    transition:
+        opacity 1.2s ease,
+        filter 1.5s ease,
+        transform 1.2s ease;
+}
+
+#siteContent.lit {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    filter:
+        brightness(1);
+
+    transform:
+        scale(1);
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+
+    padding:
+        70px 18px;
+
+    max-width: 1000px;
+
+    margin: auto;
+}
+
+.section-title {
+
+    text-align: center;
+
+    font-size: 30px;
+
+    margin-bottom: 15px;
+
+    color: #d94678;
+}
+
+.section-subtitle {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+
+    color: #8b6070;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0f6,
+            #ffd5e5
+        );
+}
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding: 25px;
+}
+
+.hero-small {
+
+    font-size: 17px;
+}
+
+.hero h1 {
+
+    font-size:
+        clamp(
+            40px,
+            10vw,
+            75px
+        );
+
+    color: #e83e78;
+
+    margin: 12px 0;
+}
+
+.hero h2 {
+
+    font-size:
+        clamp(
+            20px,
+            5vw,
+            32px
+        );
+
+    font-weight: 400;
+}
+
+.hero-date {
+
+    margin-top: 15px;
+
+    font-size: 18px;
+}
+
+.scroll-btn {
+
+    margin-top: 35px;
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    color: white;
+
+    background: #ed4f8b;
+
+    padding:
+        13px 25px;
+
+    border-radius: 30px;
+}
+
+
+/* =========================================================
+   21ST BIRTHDAY
+========================================================= */
+
+.birthday-age {
+
+    text-align: center;
+}
+
+.age-card {
+
+    width:
+        min(90%, 450px);
+
+    margin:
+        30px auto 0;
+
+    padding:
+        35px 25px;
+
+    background: white;
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(157,82,102,.12);
+}
+
+.age-number {
+
+    font-size: 80px;
+
+    font-weight: 800;
+
+    color: #e83e78;
+
+    line-height: 1;
+}
+
+.age-text {
+
+    margin-top: 15px;
+
+    font-size: 18px;
+
+    color: #8b6070;
+}
+
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+.heart {
+
+    position: fixed;
+
+    bottom: -30px;
+
+    pointer-events: none;
+
+    animation:
+        floatHeart
+        linear
+        forwards;
+
+    z-index: 10;
+}
+
+@keyframes floatHeart {
+
+    0% {
+
+        transform:
+            translateY(0)
+            rotate(0);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+@keyframes heartbeat {
+
+    0%,100% {
+
+        transform:
+            scale(1);
+    }
+
+    50% {
+
+        transform:
+            scale(1.2);
+    }
+}
+
+
+/* =========================================================
+   PHOTO GALLERY
+========================================================= */
+
+.gallery {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.photo-card {
+
+    background: white;
+
+    padding: 10px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(157,82,102,.12);
+
+    transition: .4s;
+
+    position: relative;
+
+    cursor: pointer;
+}
+
+.photo-card:nth-child(even) {
+
+    transform:
+        rotate(2deg);
+}
+
+.photo-card:nth-child(odd) {
+
+    transform:
+        rotate(-2deg);
+}
+
+.photo-card:hover {
+
+    transform:
+        rotate(0)
+        scale(1.04);
+}
+
+.photo-card img {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+.photo-card p {
+
+    text-align: center;
+
+    padding:
+        10px 3px 4px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.photo-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,.85);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    z-index: 10000;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+}
+
+.photo-lightbox.show {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.photo-lightbox img {
+
+    max-width: 92vw;
+
+    max-height: 90vh;
+
+    object-fit: contain;
+
+    border-radius: 15px;
+
+    transform:
+        scale(.8);
+
+    transition:
+        transform .35s ease;
+}
+
+.photo-lightbox.show img {
+
+    transform:
+        scale(1);
+}
+
+.photo-lightbox-close {
+
+    position: absolute;
+
+    top: 20px;
+
+    right: 25px;
+
+    color: white;
+
+    font-size: 35px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   UPLOAD
+========================================================= */
+
+.upload-box {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(182,78,114,.12);
+}
+
+.upload-box input {
+
+    margin-top: 20px;
+
+    width: 100%;
+}
+
+#uploadedGallery {
+
+    margin-top: 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.uploaded-img {
+
+    width: 100%;
+
+    aspect-ratio: 1;
+
+    object-fit: cover;
+
+    border:
+        8px solid white;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 7px 20px
+        rgba(139,64,85,.12);
+}
+
+
+/* =========================================================
+   REASONS
+========================================================= */
+
+.reasons {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.reason {
+
+    background: white;
+
+    padding:
+        25px 15px;
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(157,82,102,.12);
+
+    transition: .3s;
+}
+
+.reason:hover {
+
+    transform:
+        translateY(-8px);
+}
+
+.reason-icon {
+
+    font-size: 40px;
+
+    margin-bottom: 12px;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline {
+
+    border-left:
+        3px solid #ff85ae;
+
+    margin:
+        30px auto;
+
+    max-width: 650px;
+
+    padding-left: 25px;
+}
+
+.timeline-item {
+
+    background: white;
+
+    margin-bottom: 25px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    position: relative;
+
+    box-shadow:
+        0 6px 20px
+        rgba(157,82,102,.08);
+}
+
+.timeline-item::before {
+
+    content: "❤";
+
+    position: absolute;
+
+    left: -39px;
+
+    top: 15px;
+
+    background: #ff6f9f;
+
+    color: white;
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LOVE LETTER
+========================================================= */
+
+.letter-area {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding:
+        45px 0 80px;
+}
+
+.envelope {
+
+    width:
+        min(90vw, 440px);
+
+    height: 290px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff8ab5,
+            #ff6d9f
+        );
+
+    border-radius: 16px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 18px 45px
+        rgba(184,61,103,.18);
+
+    perspective: 900px;
+
+    isolation: isolate;
+}
+
+.envelope::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff91b9,
+            #f86a9e
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            50% 58%,
+            100% 0,
+            100% 100%,
+            0 100%
+        );
+
+    border-radius: 16px;
+
+    z-index: 4;
+
+    pointer-events: none;
+}
+
+.envelope::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 150px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff5d91,
+            #ff4785
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+
+    transform-origin:
+        50% 0%;
+
+    transform:
+        rotateX(0deg);
+
+    transition:
+        transform .7s
+        cubic-bezier(.2,.8,.2,1);
+
+    z-index: 7;
+
+    backface-visibility: hidden;
+
+    pointer-events: none;
+}
+
+.envelope.open::before {
+
+    transform:
+        rotateX(180deg);
+
+    z-index: 1;
+}
+
+.letter {
+
+    position: absolute;
+
+    width:
+        calc(100% - 36px);
+
+    left: 18px;
+
+    top: 20px;
+
+    height: 246px;
+
+    background: #fffdf5;
+
+    padding:
+        26px 22px;
+
+    border-radius: 10px;
+
+    z-index: 3;
+
+    transition:
+        transform .8s
+        cubic-bezier(.2,.8,.2,1);
+
+    overflow-y: auto;
+
+    box-shadow:
+        0 5px 18px
+        rgba(156,54,80,.12);
+}
+
+.envelope.open .letter {
+
+    transform:
+        translateY(-135px);
+
+    z-index: 8;
+}
+
+.letter h3 {
+
+    text-align: center;
+
+    color: #df467a;
+
+    margin-bottom: 15px;
+
+    font-size: 21px;
+}
+
+.letter p {
+
+    line-height: 1.7;
+
+    font-size: 15px;
+
+    color: #5b3444;
+}
+
+.letter-hint {
+
+    position: absolute;
+
+    bottom: -55px;
+
+    left: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #9a6376;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SURPRISE
+========================================================= */
+
+.surprise {
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd3e2,
+            #fff0f6
+        );
+
+    border-radius: 35px;
+
+    margin-bottom: 70px;
+}
+
+.gift {
+
+    font-size: 100px;
+
+    cursor: pointer;
+
+    display: inline-block;
+
+    animation:
+        giftBounce
+        1.3s
+        infinite;
+}
+
+@keyframes giftBounce {
+
+    0%,100% {
+
+        transform:
+            translateY(0);
+    }
+
+    50% {
+
+        transform:
+            translateY(-12px);
+    }
+}
+
+
+/* =========================================================
+   FINAL POEM
+========================================================= */
+
+#surpriseText {
+
+    display: none;
+
+    margin-top: 30px;
+
+    padding:
+        10px 15px;
+
+    font-size:
+        clamp(
+            18px,
+            4vw,
+            25px
+        );
+
+    color: #d83e73;
+
+    line-height: 1.8;
+
+    font-weight: 500;
+}
+
+#surpriseText.show {
+
+    display: block;
+
+    animation:
+        surpriseAppear
+        1.2s
+        ease forwards;
+}
+
+@keyframes surpriseAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-btn {
+
+    position: fixed;
+
+    right: 18px;
+
+    bottom: 18px;
+
+    z-index: 100;
+
+    border: none;
+
+    background: #ed4f8b;
+
+    color: white;
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 50%;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 20px
+        rgba(201,68,112,.18);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity .5s ease,
+        transform .25s ease;
+}
+
+.music-btn.visible {
+
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+.music-btn:hover {
+
+    transform:
+        scale(1.08);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    text-align: center;
+
+    padding:
+        35px 15px;
+
+    background: #ffe1eb;
+}
+
+footer p {
+
+    margin: 5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:700px) {
+
+    section {
+
+        padding:
+            60px 15px;
+    }
+
+    .gallery {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    .reasons {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .hero h1 {
+
+        font-size: 45px;
+    }
+
+    .poem-frame {
+
+        padding:
+            30px 16px;
+    }
+
+    .poem-line {
+
+        font-size: 18px;
+
+        line-height: 1.7;
+    }
+
+    .envelope {
+
+        height: 275px;
+    }
+
+    .letter {
+
+        height: 230px;
+    }
+
+    .envelope.open .letter {
+
+        transform:
+            translateY(-120px);
+    }
+
+}
+
+@media(max-width:380px) {
+
+    .gallery {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .intro-box h1 {
+
+        font-size: 27px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<div id="intro">
+
+
+    <!-- LIGHTS SCREEN -->
+
+    <div
+        class="intro-box lights-off-content"
+        id="lightsPrompt"
+    >
+
+        <div class="intro-heart">
+            💗
+        </div>
+
+        <h1>
+            It's Dark... 🌙
+        </h1>
+
+        <p>
+            There is a little surprise waiting for you.
+        </p>
+
+        <div class="intro-buttons">
+
+            <button
+                class="start-btn"
+                onclick="turnOnLights()"
+            >
+                💡 Turn On Lights
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- MUSIC SCREEN -->
+
+    <div
+        class="intro-box"
+        id="musicPrompt"
+    >
+
+        <div class="intro-heart">
+            🎵
+        </div>
+
+        <h1>
+            One Little Surprise ❤️
+        </h1>
+
+        <p>
+            There is a surprise for you...
+            <br>
+            Please wear earphones 🎧
+            <br>
+            and turn on the music.
+        </p>
+
+        <div class="intro-buttons">
+
+            <button
+                class="music-start-btn"
+                id="musicStartButton"
+                onclick="turnOnMusicAndStart()"
+            >
+                🎵 Turn On Music
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     POEM SCREEN
+========================================================= -->
+
+<div id="poemScreen">
+
+    <div class="poem-container">
+
+        <div class="poem-frame">
+
+            <div
+                class="poem-line"
+                id="poemLine1"
+            >
+                Kal tak tu bas meri tuition wali dost thi,
+            </div>
+
+            <div
+                class="poem-line"
+                id="poemLine2"
+            >
+                Pata nahi kab tu meri,
+            </div>
+
+            <div
+                class="poem-line"
+                id="poemLine3"
+            >
+                sabse khoobsurat dua ban gayi... ❤️
+            </div>
+
+            <div
+                class="poem-final"
+                id="poemFinal"
+            >
+                Aurrr..
+            </div>
+
+        </div>
+
+
+        <button
+            id="journeyButton"
+            onclick="startJourney()"
+        >
+            ❤️ Press to Start the Journey
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN WEBSITE
+========================================================= -->
+
+<div id="siteContent">
+
+
+    <!-- HERO -->
+
+    <section
+        class="hero"
+        id="home"
+    >
+
+        <div class="hero-content">
+
+            <div class="hero-small">
+                To the most beautiful girl in my world 💕
+            </div>
+
+            <h1>
+                Happy Birthday
+            </h1>
+
+            <h2>
+                My Love,
+                <span id="herName">
+                    Petruuu
+                </span>
+                ❤️
+            </h2>
+
+            <p class="hero-date">
+                1st September 🎂
+            </p>
+
+            <a
+                href="#birthday"
+                class="scroll-btn"
+            >
+                Start Our Story ↓
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         21ST BIRTHDAY
+    ====================================================== -->
+
+    <section
+        id="birthday"
+        class="birthday-age"
+    >
+
+        <h2 class="section-title">
+            21 & Beautiful ❤️
+        </h2>
+
+        <p class="section-subtitle">
+            Today isn't just another day...
+            <br>
+            it's the day the world got a little more beautiful. 🌸
+        </p>
+
+        <div class="age-card">
+
+            <div class="age-number">
+                21
+            </div>
+
+            <div class="age-text">
+                Years of being wonderfully you. ❤️
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MEMORIES
+    ====================================================== -->
+
+    <section>
+
+        <h2 class="section-title">
+            Our Little Memories 📸
+        </h2>
+
+        <p class="section-subtitle">
+            Some moments I never want to forget.
+        </p>
+
+        <div class="gallery">
+
+            <div class="photo-card">
+
+                <img
+                    src="photo1.jpg"
+                    alt="Our memory"
+                >
+
+                <p>
+                    My favourite smile ❤️
+                </p>
+
+            </div>
+
+            <div class="photo-card">
+
+                <img
+                    src="photo2.jpg"
+                    alt="Our memory"
+                >
+
+                <p>
+                    One beautiful moment 💕
+                </p>
+
+            </div>
+
+            <div class="photo-card">
+
+                <img
+                    src="photo3.jpg"
+                    alt="Our memory"
+                >
+
+                <p>
+                    You + Me 🥰
+                </p>
+
+            </div>
+
+            <div class="photo-card">
+
+                <img
+                    src="photo4.jpg"
+                    alt="Our memory"
+                >
+
+                <p>
+                    Forever a favourite 📸
+                </p>
+
+            </div>
+
+            <div class="photo-card">
+
+                <img
+                    src="photo5.jpg"
+                    alt="Our memory"
+                >
+
+                <p>
+                    That beautiful day 🌸
+                </p>
+
+            </div>
+
+            <div class="photo-card">
+
+                <img
+                    src="photo6.jpg"
+                    alt="Our memory"
+                >
+
+                <p>
+                    Another memory ❤️
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PHOTO UPLOAD
+    ====================================================== -->
+
+    <section>
+
+        <h2 class="section-title">
+            Add More Memories 💗
+        </h2>
+
+        <p class="section-subtitle">
+            You can select your favourite photos from your phone.
+        </p>
+
+        <div class="upload-box">
+
+            <h3>
+                📱 Choose Your Photos
+            </h3>
+
+            <p>
+                Select as many pictures as you want.
+            </p>
+
+            <input
+                type="file"
+                id="photoInput"
+                accept="image/*"
+                multiple
+            >
+
+            <div
+                id="uploadedGallery"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         REASONS
+    ====================================================== -->
+
+    <section>
+
+        <h2 class="section-title">
+            Reasons Why I Love You 💕
+        </h2>
+
+        <p class="section-subtitle">
+            And honestly... I could write a thousand more.
+        </p>
+
+        <div class="reasons">
+
+            <div class="reason">
+
+                <div class="reason-icon">
+                    😊
+                </div>
+
+                <h3>
+                    Your Smile
+                </h3>
+
+                <p>
+                    Somehow your smile can make even my worst days better.
+                </p>
+
+            </div>
+
+            <div class="reason">
+
+                <div class="reason-icon">
+                    ❤️
+                </div>
+
+                <h3>
+                    Your Heart
+                </h3>
+
+                <p>
+                    You care about people in a way that makes you incredibly special.
+                </p>
+
+            </div>
+
+            <div class="reason">
+
+                <div class="reason-icon">
+                    🥰
+                </div>
+
+                <h3>
+                    You Being You
+                </h3>
+
+                <p>
+                    I wouldn't change the little things that make you, YOU.
+                </p>
+
+            </div>
+
+            <div class="reason">
+
+                <div class="reason-icon">
+                    🌸
+                </div>
+
+                <h3>
+                    Your Cuteness
+                </h3>
+
+                <p>
+                    Sometimes you're cute without even trying.
+                </p>
+
+            </div>
+
+            <div class="reason">
+
+                <div class="reason-icon">
+                    🤗
+                </div>
+
+                <h3>
+                    The Way You Care
+                </h3>
+
+                <p>
+                    Your little acts of care mean more than you probably realize.
+                </p>
+
+            </div>
+
+            <div class="reason">
+
+                <div class="reason-icon">
+                    ♾️
+                </div>
+
+                <h3>
+                    Our Memories
+                </h3>
+
+                <p>
+                    Every memory with you has become something I treasure.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TIMELINE
+    ====================================================== -->
+
+    <section>
+
+        <h2 class="section-title">
+            Our Story ❤️
+        </h2>
+
+        <p class="section-subtitle">
+            A few chapters of our journey.
+        </p>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <h3>
+                    🌸 The Beginning
+                </h3>
+
+                <p>
+                    This is where our story started.
+                    It all Started Jab Mai Tumna First Book Puchu.
+                </p>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <h3>
+                    📸 Our First Memories
+                </h3>
+
+                <p>
+                    Slowly, we started collecting moments yaad hai hame first park mey mile.
+                </p>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <h3>
+                    🥰 The Best Moments
+                </h3>
+
+                <p>
+                    Laughing together, talking for hours and making memories Countless Panipuri Rides.
+                </p>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <h3>
+                    ❤️ Today
+                </h3>
+
+                <p>
+                    And here we are, celebrating another beautiful year of you My Jaan.
+                </p>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <h3>
+                    ♾️ The Future
+                </h3>
+
+                <p>
+                    Hopefully, this is only the beginning of many more memories.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LOVE LETTER
+    ====================================================== -->
+
+    <section>
+
+        <h2 class="section-title">
+            Something I Want To Tell You 💌
+        </h2>
+
+        <p class="section-subtitle">
+            Tap the envelope.
+        </p>
+
+        <div class="letter-area">
+
+            <div
+                class="envelope"
+                id="envelope"
+                onclick="openLetter(event)"
+                role="button"
+                tabindex="0"
+            >
+
+                <div class="letter">
+
+                    <h3>
+                        To My Love ❤️
+                    </h3>
+
+                    <p>
+
+                        Happy Birthday, beautiful.
+
+                        <br><br>
+
+                        I don't think words will ever be enough to explain
+                        how special you are to me.
+
+                        <br><br>
+
+                        Thank you for all the smiles, the conversations,
+                        the memories and all those little moments that
+                        somehow became my favourite moments.
+
+                        <br><br>
+
+                        I hope this new year of your life brings you
+                        everything your heart wishes for.
+
+                        <br><br>
+
+                        Keep smiling. Keep being the amazing person you are.
+
+                        <br><br>
+
+                        And no matter how many birthdays come and go,
+                        I hope I get to celebrate many more of them with you.
+
+                        <br><br>
+
+                        Happy Birthday, my love. ❤️
+
+                        <br><br>
+
+                        Forever yours,
+
+                        <br>
+
+                        <b>
+                            Me ❤️
+                        </b>
+
+                    </p>
+
+                </div>
+
+                <div class="letter-hint">
+                    💌 Tap the envelope to open/close
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL SURPRISE
+    ====================================================== -->
+
+    <section class="surprise">
+
+        <h2 class="section-title">
+            One Last Surprise 🎁
+        </h2>
+
+        <p>
+            There is something waiting for you...
+        </p>
+
+        <br>
+
+        <div
+            class="gift"
+            onclick="openGift()"
+        >
+            🎁
+        </div>
+
+
+        <!-- YOUR NEW POEM -->
+
+        <div id="surpriseText">
+
+            Tum Mili Toh Laga,
+            <br>
+            Jaise Dua Quabool Hui ❤️
+
+            <br><br>
+
+            Dil ki ek Khamoshi si
+            <br>
+            Khwaish Poori Hui 💕
+
+            <br><br>
+
+            Paanch Saal Beet Gaye,
+            <br>
+            Phir Bhi Dil Kehta Hai...
+
+            <br><br>
+
+            Tum Sath Ho Toh
+            <br>
+            Har Kami Puri Hui ❤️
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            Made with ❤️ especially for you
+        </p>
+
+        <p>
+            Happy Birthday, Beautiful 🎂
+        </p>
+
+    </footer>
+
+</div>
+
+
+<!-- =========================================================
+     MUSIC BUTTON
+========================================================= -->
+
+<button
+    class="music-btn"
+    onclick="toggleMusic()"
+    id="musicButton"
+    aria-label="Pause music"
+>
+    🔊
+</button>
+
+
+<!-- =========================================================
+     AUDIO
+========================================================= -->
+
+<audio
+    id="music"
+    loop
+>
+
+    <source
+        src="music.mp3"
+        type="audio/mpeg"
+    >
+
+</audio>
+
+
+<!-- =========================================================
+     PHOTO LIGHTBOX
+========================================================= -->
+
+<div
+    class="photo-lightbox"
+    id="photoLightbox"
+>
+
+    <span
+        class="photo-lightbox-close"
+        id="photoLightboxClose"
+    >
+        ×
+    </span>
+
+    <img
+        id="lightboxImage"
+        src=""
+        alt="Enlarged memory"
+    >
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const music =
+    document.getElementById("music");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+const musicStartButton =
+    document.getElementById("musicStartButton");
+
+const intro =
+    document.getElementById("intro");
+
+const siteContent =
+    document.getElementById("siteContent");
+
+const poemScreen =
+    document.getElementById("poemScreen");
+
+const journeyButton =
+    document.getElementById("journeyButton");
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+document.body.classList.add("locked");
+
+siteContent.classList.remove("lit");
+
+poemScreen.classList.remove("show");
+
+musicButton.classList.remove("visible");
+
+
+/* =========================================================
+   TURN ON LIGHTS
+========================================================= */
+
+function turnOnLights() {
+
+    const lightsPrompt =
+        document.getElementById("lightsPrompt");
+
+    const musicPrompt =
+        document.getElementById("musicPrompt");
+
+
+    intro.classList.add("lights-on");
+
+
+    lightsPrompt.style.opacity = "0";
+
+    lightsPrompt.style.transform =
+        "scale(.94)";
+
+
+    setTimeout(() => {
+
+        lightsPrompt.style.display =
+            "none";
+
+
+        musicPrompt.classList.add("show");
+
+
+        musicPrompt.style.opacity =
+            "0";
+
+        musicPrompt.style.transform =
+            "scale(.94)";
+
+
+        requestAnimationFrame(() => {
+
+            musicPrompt.style.opacity =
+                "1";
+
+            musicPrompt.style.transform =
+                "scale(1)";
+
+        });
+
+    }, 700);
+
+}
+
+
+/* =========================================================
+   TURN ON MUSIC + SHOW POEM
+========================================================= */
+
+function turnOnMusicAndStart() {
+
+    /*
+       Start the audio from 0.
+
+       The poem plays during the
+       first 9 seconds.
+
+       "Jo Tum Mere Ho" should begin
+       at 9 seconds.
+    */
+
+    music.currentTime = 0;
+
+
+    music.play()
+        .then(() => {
+
+            musicButton.classList.add(
+                "visible"
+            );
+
+            musicButton.innerHTML =
+                "🔊";
+
+            musicStartButton.innerHTML =
+                "🔊 Music On";
+
+            musicStartButton.classList.add(
+                "active"
+            );
+
+        })
+        .catch(() => {
+
+            console.log(
+                "Music could not start."
+            );
+
+        });
+
+
+    const musicPrompt =
+        document.getElementById(
+            "musicPrompt"
+        );
+
+
+    musicPrompt.style.opacity =
+        "0";
+
+    musicPrompt.style.transform =
+        "scale(.94)";
+
+
+    setTimeout(() => {
+
+        /*
+           Hide intro.
+        */
+
+        intro.style.opacity =
+            "0";
+
+        intro.style.visibility =
+            "hidden";
+
+
+        /*
+           Show poem.
+        */
+
+        poemScreen.classList.add(
+            "show"
+        );
+
+
+        /*
+           Completely remove intro
+           after transition.
+        */
+
+        setTimeout(() => {
+
+            intro.style.display =
+                "none";
+
+        }, 1000);
+
+
+        /*
+           Start poem animation.
+        */
+
+        startPoemAnimation();
+
+    }, 500);
+
+}
+
+
+/* =========================================================
+   POEM ANIMATION
+========================================================= */
+
+function startPoemAnimation() {
+
+    const lines = [
+
+        document.getElementById(
+            "poemLine1"
+        ),
+
+        document.getElementById(
+            "poemLine2"
+        ),
+
+        document.getElementById(
+            "poemLine3"
+        )
+
+    ];
+
+
+    /*
+       SLOWER LETTER ANIMATION
+
+       This is intentionally slower
+       so she can actually read it.
+    */
+
+    const letterSpeed = 70;
+
+
+    /*
+       Gap between each line.
+    */
+
+    const lineGap = 350;
+
+
+    let currentDelay = 500;
+
+
+    lines.forEach((line) => {
+
+        const text =
+            line.textContent.trim();
+
+
+        line.innerHTML = "";
+
+
+        [...text].forEach(
+            character => {
+
+                const span =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                span.className =
+                    "poem-letter";
+
+
+                span.textContent =
+                    character === " "
+                        ? "\u00A0"
+                        : character;
+
+
+                span.style.animationDelay =
+                    currentDelay + "ms";
+
+
+                line.appendChild(
+                    span
+                );
+
+
+                currentDelay +=
+                    letterSpeed;
+
+            }
+        );
+
+
+        currentDelay +=
+            lineGap;
+
+    });
+
+
+    /*
+       IMPORTANT:
+
+       The entire poem animation
+       is designed around 9 seconds.
+
+       At 9 seconds:
+       "kyuki..." appears.
+
+       At exactly 9 seconds:
+       music moves to the lyric.
+    */
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById(
+                "poemFinal"
+            )
+            .classList.add(
+                "animate"
+            );
+
+    }, 7800);
+
+
+    /*
+       Force music to the 9-second
+       lyric point.
+
+       This means the guitar intro
+       finishes before "Jo Tum Mere Ho".
+    */
+
+    setTimeout(() => {
+
+        if (!music.paused) {
+
+            music.currentTime = 9;
+
+        }
+
+    }, 9000);
+
+
+    /*
+       Show journey button after
+       the poem is completely finished.
+    */
+
+    setTimeout(() => {
+
+        journeyButton.classList.add(
+            "show"
+        );
+
+    }, 9200);
+
+}
+
+
+/* =========================================================
+   START JOURNEY
+========================================================= */
+
+function startJourney() {
+
+    /*
+       First make sure the main site
+       starts from EXACTLY the top.
+    */
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+
+    /*
+       Hide poem.
+    */
+
+    poemScreen.style.opacity =
+        "0";
+
+
+    /*
+       Show website.
+    */
+
+    siteContent.classList.add(
+        "lit"
+    );
+
+
+    /*
+       Unlock scrolling.
+    */
+
+    document.body.classList.remove(
+        "locked"
+    );
+
+
+    /*
+       Hide poem completely after
+       fade animation.
+    */
+
+    setTimeout(() => {
+
+        poemScreen.classList.remove(
+            "show"
+        );
+
+        poemScreen.style.display =
+            "none";
+
+
+        /*
+           IMPORTANT:
+
+           Force page to top again.
+
+           This prevents the 21st birthday
+           section from appearing first
+           or being scrolled upward.
+        */
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
+
+    }, 1000);
+
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+function startMusic() {
+
+    music.play()
+        .then(() => {
+
+            musicButton.classList.add(
+                "visible"
+            );
+
+            musicButton.innerHTML =
+                "🔊";
+
+        })
+        .catch(() => {
+
+            console.log(
+                "Music could not start."
+            );
+
+        });
+
+}
+
+
+function toggleMusic() {
+
+    if (music.paused) {
+
+        startMusic();
+
+    } else {
+
+        music.pause();
+
+        musicButton.innerHTML =
+            "🎵";
+
+    }
+
+}
+
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+function createHeart() {
+
+    /*
+       Only show floating hearts
+       after the main website appears.
+    */
+
+    if (
+        !siteContent.classList.contains(
+            "lit"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const heart =
+        document.createElement(
+            "div"
+        );
+
+
+    heart.className =
+        "heart";
+
+
+    const hearts = [
+
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "💓",
+        "💘",
+        "🌸"
+
+    ];
+
+
+    heart.innerHTML =
+        hearts[
+            Math.floor(
+                Math.random() *
+                hearts.length
+            )
+        ];
+
+
+    heart.style.left =
+        Math.random() * 100 +
+        "vw";
+
+
+    heart.style.fontSize =
+        (
+            15 +
+            Math.random() * 25
+        ) +
+        "px";
+
+
+    heart.style.animationDuration =
+        (
+            5 +
+            Math.random() * 6
+        ) +
+        "s";
+
+
+    document.body.appendChild(
+        heart
+    );
+
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 11000);
+
+}
+
+
+setInterval(
+    createHeart,
+    700
+);
+
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+const photoInput =
+    document.getElementById(
+        "photoInput"
+    );
+
+const uploadedGallery =
+    document.getElementById(
+        "uploadedGallery"
+    );
+
+
+photoInput.addEventListener(
+    "change",
+    function(event) {
+
+        uploadedGallery.innerHTML =
+            "";
+
+
+        const files =
+            event.target.files;
+
+
+        for (
+            let file of files
+        ) {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(e) {
+
+                    const img =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    img.src =
+                        e.target.result;
+
+
+                    img.className =
+                        "uploaded-img";
+
+
+                    uploadedGallery.appendChild(
+                        img
+                    );
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PHOTO LIGHTBOX
+========================================================= */
+
+const photoCards =
+    document.querySelectorAll(
+        ".photo-card"
+    );
+
+const photoLightbox =
+    document.getElementById(
+        "photoLightbox"
+    );
+
+const lightboxImage =
+    document.getElementById(
+        "lightboxImage"
+    );
+
+const photoLightboxClose =
+    document.getElementById(
+        "photoLightboxClose"
+    );
+
+
+photoCards.forEach(
+    card => {
+
+        card.addEventListener(
+            "click",
+            function() {
+
+                const image =
+                    card.querySelector(
+                        "img"
+                    );
+
+
+                if (!image)
+                    return;
+
+
+                lightboxImage.src =
+                    image.src;
+
+
+                lightboxImage.alt =
+                    image.alt;
+
+
+                photoLightbox.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+    }
+);
+
+
+photoLightbox.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+
+            event.target ===
+                photoLightbox ||
+
+            event.target ===
+                photoLightboxClose
+
+        ) {
+
+            photoLightbox.classList.remove(
+                "show"
+            );
+
+
+            lightboxImage.src =
+                "";
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+
+            event.key === "Escape" &&
+
+            photoLightbox.classList.contains(
+                "show"
+            )
+
+        ) {
+
+            photoLightbox.classList.remove(
+                "show"
+            );
+
+
+            lightboxImage.src =
+                "";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOVE LETTER
+========================================================= */
+
+function openLetter(event) {
+
+    if (event) {
+
+        event.stopPropagation();
+
+    }
+
+
+    const envelope =
+        document.getElementById(
+            "envelope"
+        );
+
+
+    envelope.classList.toggle(
+        "open"
+    );
+
+}
+
+
+document
+    .getElementById(
+        "envelope"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+
+                event.key === "Enter" ||
+
+                event.key === " "
+
+            ) {
+
+                event.preventDefault();
+
+                openLetter(event);
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   FINAL GIFT
+========================================================= */
+
+function openGift() {
+
+    const text =
+        document.getElementById(
+            "surpriseText"
+        );
+
+
+    /*
+       Prevent opening animation
+       from restarting repeatedly.
+    */
+
+    if (
+        text.classList.contains(
+            "show"
+        )
+    ) {
+
+        createConfetti();
+
+        return;
+
+    }
+
+
+    text.classList.add(
+        "show"
+    );
+
+
+    createConfetti();
+
+}
+
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+function createConfetti() {
+
+    const symbols = [
+
+        "❤️",
+        "💗",
+        "💕",
+        "✨",
+        "🌸",
+        "🎉",
+        "💖"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < 80;
+        i++
+    ) {
+
+        const confetti =
+            document.createElement(
+                "div"
+            );
+
+
+        confetti.innerHTML =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
+
+
+        confetti.style.position =
+            "fixed";
+
+
+        confetti.style.left =
+            Math.random() * 100 +
+            "vw";
+
+
+        confetti.style.top =
+            "-30px";
+
+
+        confetti.style.fontSize =
+            (
+                15 +
+                Math.random() * 20
+            ) +
+            "px";
+
+
+        confetti.style.zIndex =
+            "9999";
+
+
+        confetti.style.pointerEvents =
+            "none";
+
+
+        document.body.appendChild(
+            confetti
+        );
+
+
+        const duration =
+            2 +
+            Math.random() * 4;
+
+
+        confetti.animate(
+
+            [
+
+                {
+
+                    transform:
+                        "translateY(0) rotate(0deg)",
+
+                    opacity: 1
+
+                },
+
+                {
+
+                    transform:
+                        "translateY(110vh) rotate(720deg)",
+
+                    opacity: 0
+
+                }
+
+            ],
+
+            {
+
+                duration:
+                    duration * 1000,
+
+                easing:
+                    "ease-out"
+
+            }
+
+        );
+
+
+        setTimeout(() => {
+
+            confetti.remove();
+
+        }, duration * 1000);
+
+    }
+
+}
+
+
+/* =========================================================
+   CLICK HEART
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(e) {
+
+        if (
+
+            e.target.tagName ===
+                "BUTTON" ||
+
+            e.target.tagName ===
+                "INPUT" ||
+
+            e.target.closest(
+                ".envelope"
+            ) ||
+
+            e.target.closest(
+                ".gift"
+            )
+
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            photoLightbox.classList.contains(
+                "show"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            !siteContent.classList.contains(
+                "lit"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const heart =
+            document.createElement(
+                "div"
+            );
+
+
+        heart.innerHTML =
+            "💗";
+
+
+        heart.style.position =
+            "fixed";
+
+
+        heart.style.left =
+            e.clientX + "px";
+
+
+        heart.style.top =
+            e.clientY + "px";
+
+
+        heart.style.fontSize =
+            "25px";
+
+
+        heart.style.pointerEvents =
+            "none";
+
+
+        heart.style.zIndex =
+            "9999";
+
+
+        document.body.appendChild(
+            heart
+        );
+
+
+        heart.animate(
+
+            [
+
+                {
+
+                    transform:
+                        "translate(-50%, -50%) scale(0)",
+
+                    opacity: 0
+
+                },
+
+                {
+
+                    transform:
+                        "translate(-50%, -100px) scale(1.5)",
+
+                    opacity: 1
+
+                },
+
+                {
+
+                    transform:
+                        "translate(-50%, -150px) scale(.5)",
+
+                    opacity: 0
+
+                }
+
+            ],
+
+            {
+
+                duration: 1000,
+
+                easing:
+                    "ease-out"
+
+            }
+
+        );
+
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 1000);
+
+    }
+);
+
+</script>
+
+</body>
+</html>
